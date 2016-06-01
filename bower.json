@@ -1,0 +1,20 @@
+{
+  "name": "library",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Yogesh Manware <yogesh.manware@sungard.com>"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "^4.6.3"
+  }
+}
