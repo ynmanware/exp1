@@ -2,7 +2,9 @@ var express = require('express'),
  mongoose = require('mongoose'),
  bodyParser = require("body-parser");
 
-var db = mongoose.connect('mongodb://localhost/parkingAPI');
+//var db = mongoose.connect('mongodb://localhost/parkingAPI');
+var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
+
 var Parking = require('./models/parkingModel');
 
 
