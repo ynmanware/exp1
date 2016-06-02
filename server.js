@@ -26,7 +26,7 @@ app.set('views', './src/views');
 app.set('view engine', 'jade');
 
 app.get('/', function(req, res){
-    res.render("index");
+    res.render("index.html");
 });
 
 app.listen(process.env.PORT || 5000, function(err){

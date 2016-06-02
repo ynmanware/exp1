@@ -6,7 +6,7 @@ var jsFiles = ['*.js', 'src/**/*.js'];
 
 gulp.task('default', function(){
 	var options = {
-		script: 'app.js',
+		script: 'server.js',
 		delayTile: 1,
 		env: {
 			'PORT': 5000
