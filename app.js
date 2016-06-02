@@ -7,7 +7,6 @@ var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/
 
 var Parking = require('./models/parkingModel');
 
-
 var app = express();
 
 var port = 5000;
@@ -30,6 +29,6 @@ app.get('/', function(req, res){
     res.render("index");
 });
 
-app.listen(port, function(err){
+app.listen(process.env.PORT || 5000, function(err){
     console.log("running server on port : " + port);
 });
