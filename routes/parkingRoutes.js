@@ -16,9 +16,26 @@ var routes = function(Parking) {
 			}
 		})
 	})
+	
+		parkingRouter.route('/parkingsjsonp')
+		.get(function(req, res) {
+			var query = req.query;
+			console.log("Query :" + req.query.callback );
+			var q = req.query.callback;
+			req.query.callback = null
+			Parking.find(query, function(err, parkings) {
+				if (err) {
+					console.log(err);
+				} else {
+					res.header('Content-type','application/json');
+					res.send(q + '('+ JSON.stringify(parkings) + ');');
+				}
+			})
+		})
 
 	parkingRouter.route('/parkings')
 		.get(function(req, res) {
+					console.log("Bingo ..............");
 			var query = req.query;
 			Parking.find(query, function(err, parkings) {
 				if (err) {
@@ -77,7 +94,7 @@ var routes = function(Parking) {
 				if (err)
 					res.status(500).send(err);
 				else
-					res.status(204).send("ok");
+					res.status(204).send("Delete Succeeded");
 			});
 		});
 

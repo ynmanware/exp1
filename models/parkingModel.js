@@ -2,12 +2,47 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 var parkingModel = new Schema({
-	parkingUid:{type: String},
-	owner:{type: String},
-	perHourRate:{type: String},
-	allocated:{type: Boolean, default:false},
-	address: {type: String},
-	reserved:{type: Boolean, default:false},
+	id : {
+		type : Number
+	},
+	name : {
+		type : String
+	},
+	center : {
+		lat : {
+			type : Number
+		},
+		lng : {
+			type : Number
+		}
+	},
+	spaces : [{
+		id : {
+			type : Number
+		},
+		name : {
+			type : String
+		},
+		parkings : [{
+			id : {
+				type : Number
+			},
+			name : {
+				type : String
+			},
+			status : {
+				type : String
+			}
+		}],
+		cords : [{
+			lat : {
+				type : Number
+			},
+			lng : {
+				type : Number
+			}
+		}]
+	}]
 })
 
 module.exports = mongoose.model('Parking', parkingModel);

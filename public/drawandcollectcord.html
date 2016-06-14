@@ -142,7 +142,8 @@ function getPolygonCoords() {
   var len = myPolygon.getPath().getLength();
   var htmlStr = "";
   for (var i = 0; i < len; i++) {
-    htmlStr += "new google.maps.LatLng(" + myPolygon.getPath().getAt(i).toUrlValue(5) + "), ";
+    // htmlStr += "new google.maps.LatLng(" + myPolygon.getPath().getAt(i).toUrlValue(5) + "), ";
+	  htmlStr += "{'lat':" + myPolygon.getPath().getAt(i).lat() + ", 'lng':" + myPolygon.getPath().getAt(i).lng() + "}, ";
     //Use this one instead if you want to get rid of the wrap > new google.maps.LatLng(),
     //htmlStr += "" + myPolygon.getPath().getAt(i).toUrlValue(5);
   }
