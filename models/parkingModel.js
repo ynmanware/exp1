@@ -3,7 +3,7 @@ Schema = mongoose.Schema;
 
 var parkingModel = new Schema({
 	id : {
-		type : Number
+		type : String
 	},
 	name : {
 		type : String
@@ -18,14 +18,14 @@ var parkingModel = new Schema({
 	},
 	spaces : [{
 		id : {
-			type : Number
+			type : String
 		},
 		name : {
 			type : String
 		},
 		owner : {
 			id :{
-			type : Number
+			type : String
 			},
 			name: {
 			type : String	
