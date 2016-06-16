@@ -59,12 +59,7 @@ var routes = function(Parking) {
 			res.json(req.parking);
 		})
 		.put(function(req, res) {
-			req.parking.parkingUid = req.body.parkingUid;
-			req.parking.owner = req.body.owner;
-			req.parking.ratePerHour = req.body.ratePerHour;
-			req.parking.address = req.body.address;
-			req.parking.allocated = req.body.allocated;
-
+			req.parking.spaces = req.body.spaces;
 			req.parking.save(function(err) {
 				if (err) {
 					res.status(500).send(err);
@@ -97,6 +92,19 @@ var routes = function(Parking) {
 					res.status(204).send("Delete Succeeded");
 			});
 		});
+
+
+		//delete all 
+		parkingRouter.route('/parking-del').post(function(req, res) {
+			Parking.remove({}, function(err){
+				if (err) {
+                console.log(err)
+            	} else {
+                	res.send('success');
+            	}	
+			});
+		});
+
 
 	return parkingRouter;
 

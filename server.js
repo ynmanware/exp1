@@ -2,10 +2,13 @@ var express = require('express'),
  mongoose = require('mongoose'),
  bodyParser = require("body-parser");
  var cron = require('node-schedule');
+ 
+ var cors = require('cors')
 
-// var db = mongoose.connect('mongodb://localhost/parkingAPI');
 
- var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
+//  var db = mongoose.connect('mongodb://localhost/parkingAPI');
+
+    var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
 
 var Parking = require('./models/parkingModel');
 
@@ -13,7 +16,7 @@ var Reservation = require('./models/reservationModel');
 
 var app = express();
 
-var port = 5000;
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -36,14 +39,6 @@ cron.scheduleJob(rule, function(){
 			})
 });*/
 
-
-app.all('*', function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
 app.use('/api', parkingRouter);
 app.use('/res', reservationRouter);
 
@@ -60,5 +55,5 @@ app.get('/', function(req, res){
 
 
 app.listen(process.env.PORT || 5000, function(err){
-    console.log("running server on port : " + port);
+    console.log("running server on port : " + 5000);
 });

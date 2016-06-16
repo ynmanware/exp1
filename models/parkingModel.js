@@ -8,14 +8,7 @@ var parkingModel = new Schema({
 	name : {
 		type : String
 	},
-	center : {
-		lat : {
-			type : Number
-		},
-		lng : {
-			type : Number
-		}
-	},
+	center : [{type: Number}],
 	spaces : [{
 		id : {
 			type : String
@@ -23,6 +16,7 @@ var parkingModel = new Schema({
 		name : {
 			type : String
 		},
+		loc : [{type: Number}],
 		owner : {
 			id :{
 			type : String
@@ -47,7 +41,7 @@ var parkingModel = new Schema({
 		},
 		slots : [{
 			id : {
-				type : Number
+				type : String
 			},
 			name : {
 				type : String
