@@ -5,7 +5,7 @@ var express = require('express'),
 
 // var db = mongoose.connect('mongodb://localhost/parkingAPI');
 
-var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
+ var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
 
 var Parking = require('./models/parkingModel');
 
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 var parkingRouter = require('./routes/parkingRoutes')(Parking);
-var reservationRouter = require('./routes/reservationRoutes')(Reservation);
+var reservationRouter = require('./routes/reservationRoutes')(Reservation, Parking);
 
 var rule = new cron.RecurrenceRule();
 
