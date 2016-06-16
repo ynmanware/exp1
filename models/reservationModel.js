@@ -2,21 +2,18 @@ var mongoose = require('mongoose'),
 Schema = mongoose.Schema;
 
 var reservationModel = new Schema({
-	spot : {
-		areaId: {type: Number},
-		spaceId : {type: Number},
-		spotId : {type: Number},
-		status : {type: String}
-	},
+	spotId : {type: String},
 	clientId: {
-		type : Number
+		type : String
 	},
+	status: {type: String},
 	from: {
-		type: DateTime
+		type: Date
 	},
 	to: {
-		type: DateTime
-	}
+		type: Date
+	},
+	date: { type: Date, default: Date.now }
 })
 
 module.exports = mongoose.model('Reservation', reservationModel);
