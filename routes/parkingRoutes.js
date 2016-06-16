@@ -105,6 +105,35 @@ var routes = function(Parking) {
 			});
 		});
 
+		// make all parkings available
+		parkingRouter.route('/parking-av').post(function(req, res) {
+				Parking.find({}, function (err, parkings) {
+				if (err) {
+					console.log(err);
+				} else {
+					for (var i = 0; i < parkings.length; i++) {
+						var spaces = parkings[i].spaces;
+						for (var j = 0; j < spaces.length; j++) {
+								var slots = spaces[j].slots;
+								for (var k = 0; k < slots.length; k++) {
+									if (("available" != slots[k].status) || (!slots[k].status)) {
+											slots[k].status = "available";
+											parkings[i].save(function (err) {
+											if (err) {
+												res.status(500).send(err);
+											}
+											 else {
+
+											 }
+										});
+									}
+								}
+						}
+					}
+					res.json({"status": "updated successfully"});
+				}
+			})	
+		});
 
 		//FIS space related - start
 		parkingRouter.route('/parkingspace/count/:spaceId')
@@ -160,7 +189,7 @@ var routes = function(Parking) {
 												res.status(500).send(err);
 											}
 											 else {
-											 	
+
 											 }
 										});
 										break;	

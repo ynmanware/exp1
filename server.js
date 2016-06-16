@@ -3,9 +3,12 @@ var express = require('express'),
  bodyParser = require("body-parser");
  //var cron = require('node-schedule');
  
-// var db = mongoose.connect('mongodb://localhost/parkingAPI');
+ var cors = require('cors')
 
-   var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
+
+ // var db = mongoose.connect('mongodb://localhost/parkingAPI');
+
+var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
 
 var Parking = require('./models/parkingModel');
 
@@ -13,11 +16,7 @@ var Reservation = require('./models/reservationModel');
 
 var app = express();
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -30,6 +29,7 @@ var reservationRouter = require('./routes/reservationRoutes')(Reservation, Parki
 
 /*
 var rule = new cron.RecurrenceRule();
+
 rule.second = 60;
 cron.scheduleJob(rule, function(){
     Parking.find(null, function(err, parkings) {
@@ -53,8 +53,6 @@ app.set('jsonp callback name', 'cb')
 app.get('/', function(req, res){
     res.render("index.html");
 });
-
-
 
 app.listen(process.env.PORT || 5000, function(err){
     console.log("running server on port : " + 5000);

@@ -22,6 +22,36 @@ var routes = function (Reservation, Parking) {
 
 		reservation.save();
 
+		var spotId = reservation.spotId;
+		var statusd = reservation.status;
+
+		Parking.find({}, function (err, parkings) {
+			if (err) {
+				console.log(err);
+			} else {
+				for (var i = 0; i < parkings.length; i++) {
+					var spaces = parkings[i].spaces;
+					for (var j = 0; j < spaces.length; j++) {
+						var slots = spaces[j].slots;
+						for (var k = 0; k < slots.length; k++) {
+							if (spotId == slots[k].id) {
+								slots[k].status = statusd;
+								parkings[i].save(function (err) {
+									if (err) {
+										res.status(500).send(err);
+									}
+									 else {
+									 	console.log("updated successfully");
+									 }
+								});
+								break;
+							}
+						}
+					}
+				}
+			}
+		});
+
 		res.send(reservation);
 	})
 
@@ -71,11 +101,42 @@ var routes = function (Reservation, Parking) {
 		res.json(req.reservation);
 	})
 	.delete(function (req, res) {
+		Parking.find({}, function (err, parkings) {
+			if (err) {
+				console.log(err);
+			} else {
+				for (var i = 0; i < parkings.length; i++) {
+					var spaces = parkings[i].spaces;
+					for (var j = 0; j < spaces.length; j++) {
+						var slots = spaces[j].slots;
+						for (var k = 0; k < slots.length; k++) {
+							if (spotId == slots[k].id) {
+								slots[k].status = "available";
+								parkings[i].save(function (err) {
+									if (err) {
+										console.log("error while updating parking");
+									}
+									 else {
+									 	console.log("updated successfully");
+									 }
+								});
+								break;
+							}
+						}
+					}
+				}
+			}
+		});
+
 		req.reservation.remove(function (err) {
 			if (err)
 				res.status(500).send(err);
-			else
-				res.status(204).send("Delete Succeeded");
+			else{
+				
+		var spotId = req.reservation.spotId;
+
+			res.status(204).send("Delete Succeeded");
+			}
 		});
 	});
 
@@ -160,6 +221,18 @@ var routes = function (Reservation, Parking) {
 
 		//			res.json(result);
 	});
+
+
+        //delete all 
+		reservationRouter.route('/reservation-del').post(function(req, res) {
+			Reservation.remove({}, function(err){
+				if (err) {
+                console.log(err)
+            	} else {
+                	res.send('success');
+            	}	
+			});
+		});
 
 	return reservationRouter;
 }
