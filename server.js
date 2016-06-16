@@ -28,9 +28,9 @@ app.use(bodyParser.urlencoded({
 var parkingRouter = require('./routes/parkingRoutes')(Parking);
 var reservationRouter = require('./routes/reservationRoutes')(Reservation, Parking);
 
+/*
 var rule = new cron.RecurrenceRule();
-
-/*rule.second = 60;
+rule.second = 60;
 cron.scheduleJob(rule, function(){
     Parking.find(null, function(err, parkings) {
 				if (err) {
