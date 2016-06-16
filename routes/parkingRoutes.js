@@ -106,6 +106,79 @@ var routes = function(Parking) {
 		});
 
 
+		//FIS space related - start
+		parkingRouter.route('/parkingspace/count/:spaceId')
+		.get(function(req, res) {
+			var spaceId = req.params.spaceId;
+				
+			//find parking
+			Parking.find({}, function (err, parkings) {
+				if (err) {
+					console.log(err);
+				} else {
+					var count = 0;
+					for (var i = 0; i < parkings.length; i++) {
+						var spaces = parkings[i].spaces;
+						for (var j = 0; j < spaces.length; j++) {
+							if(spaceId == spaces[j].id) {
+								var slots = spaces[j].slots;
+								for (var k = 0; k < slots.length; k++) {
+									if ("available" == slots[k].status || (!slots[k].status)) {
+										count++;
+									}
+								}
+								break;		
+							}
+						}
+					}
+					res.json({"available": count});
+				}
+			});
+		})
+		.post(function(req, res) {
+			var spaceId = req.params.spaceId;
+			var status = req.body.status;
+			console.log(status);
+			if(!status){
+				status = "busy";
+			}
+
+			Parking.find({}, function (err, parkings) {
+				if (err) {
+					console.log(err);
+				} else {
+					for (var i = 0; i < parkings.length; i++) {
+						var spaces = parkings[i].spaces;
+						for (var j = 0; j < spaces.length; j++) {
+							if(spaceId == spaces[j].id) {
+								var slots = spaces[j].slots;
+								for (var k = 0; k < slots.length; k++) {
+									if ((status != slots[k].status) || (!slots[k].status)) {
+											slots[k].status = status;
+											parkings[i].save(function (err) {
+											if (err) {
+												res.status(500).send(err);
+											}
+											 else {
+											 	
+											 }
+										});
+										break;	
+									}
+								}
+								
+							}
+						}
+					}
+					res.json({"status": "updated successfully"});
+				}
+			})	
+
+
+		});
+
+		//FIS space related - end
+
 	return parkingRouter;
 
 }
