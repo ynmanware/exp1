@@ -84,9 +84,10 @@ var routes = function (Reservation, Parking) {
 		var result = null;
 		var statusd = null;
 		var spotId = null;
+		spotId = req.body['spotId'];
+		statusd = req.body['status'];
+
 		Reservation.find(null, function (err, reservations) {
-			spotId = req.body['spotId'];
-			statusd = req.body['status'];
 			for (var i = 0; i < reservations.length; i++) {
 				var resr = reservations[i];
 				if (resr.spotId == spotId) {
@@ -98,11 +99,39 @@ var routes = function (Reservation, Parking) {
 							res.status(500).send(err);
 						}
 					});
-					res.json(result);
 					break;
 				}
 			}
-		})
+		});
+
+		Parking.find({}, function (err, parkings) {
+			if (err) {
+				console.log(err);
+			} else {
+				for (var i = 0; i < parkings.length; i++) {
+					var spaces = parkings[i].spaces;
+					for (var j = 0; j < spaces.length; j++) {
+						var slots = spaces[j].slots;
+						for (var k = 0; k < slots.length; k++) {
+							if (spotId == slots[k].id) {
+								slots[k].status = statusd;
+								parkings[i].save(function (err) {
+									if (err) {
+										res.status(500).send(err);
+									}
+									 else {
+									 	console.log("updated successfully");
+									 }
+								});
+								break;
+							}
+						}
+					}
+				}
+			}
+		});
+
+		res.json(result);
 	});
 
 	reservationRouter.route('/spot/:spotId').get(function (req, res) {
