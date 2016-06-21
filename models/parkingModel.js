@@ -16,6 +16,9 @@ var parkingModel = new Schema({
 		name : {
 			type : String
 		},
+		rate: {
+			type: Number
+		},
 		loc : [{type: Number}],
 		owner : {
 			id :{
