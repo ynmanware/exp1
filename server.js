@@ -6,9 +6,9 @@ var express = require('express'),
  var cors = require('cors')
 
 
- // var db = mongoose.connect('mongodb://localhost/parkingAPI');
+//var db = mongoose.connect('mongodb://localhost/parkingAPI');
 
-var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
+ var db = mongoose.connect('mongodb://ynmanware:p2ssw0rd@ds028559.mlab.com:28559/parkingonrent');
 
 var Parking = require('./models/parkingModel');
 
@@ -54,6 +54,27 @@ app.get('/', function(req, res){
     res.render("index.html");
 });
 
-app.listen(process.env.PORT || 5000, function(err){
+var server = app.listen(process.env.PORT || 5000, function(err){
     console.log("running server on port : " + 5000);
 });
+
+const io = require('socket.io')(server);
+
+global.socketIO = io;
+
+// Set socket.io listeners.
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+
+    client.on('messages', function(data) {
+    		console.log("Receivied message from client: " + data);
+           client.emit('broad', data);
+           client.broadcast.emit('broad',data);
+    });
+
+});
+

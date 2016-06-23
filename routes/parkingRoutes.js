@@ -167,7 +167,11 @@ var routes = function(Parking) {
 		.post(function(req, res) {
 			var spaceId = req.params.spaceId;
 			var status = req.body.status;
-			console.log(status);
+			console.log("received status as busy: " + status);
+			
+			var socketIO = global.socketIO;
+			socketIO.emit('refresh', "refresh available spaces!");
+
 			if(!status){
 				status = "busy";
 			}
