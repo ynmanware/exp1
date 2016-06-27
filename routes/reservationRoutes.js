@@ -147,6 +147,8 @@ var routes = function (Reservation, Parking) {
 		var spotId = null;
 		spotId = req.body['spotId'];
 		statusd = req.body['status'];
+			var socketIO = global.socketIO;
+			socketIO.emit('refresh', "refresh available spaces!");
 
 		Reservation.find(null, function (err, reservations) {
 			for (var i = 0; i < reservations.length; i++) {
